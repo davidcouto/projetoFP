@@ -31,3 +31,15 @@ def pessoaSalvar(request):
 
         pessoa.save()
         return HttpResponseRedirect('/pessoas/')
+
+
+def pessoaPesquisar(request):
+    if request.method == 'POST':
+        valor = request.POST.get('textoBusca','joao')
+
+        try:
+            pessoa = Pessoa.objects.filter(nome__contains=valor)
+        except:
+            pessoa = Pessoa()
+
+    return render(request, 'pessoas/listaPessoas.html', {'pessoas': pessoa})
